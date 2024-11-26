@@ -1,0 +1,27 @@
+<section class="modal-form">
+  <div class="form-container">
+    <div class="close-modal" (click)="close({})">×</div>
+
+    <h2 class="mb-4">Nuevo Rol</h2>
+    <form class="h-100" [formGroup]="roleForm" (submit)="createRole()">
+      <div class="overflow-auto h-75 pe-4">
+        <fieldset class="form-group mb-3">
+          <label for="name">Nombre</label>
+          <input id="name" class="form-control" placeholder="Nombre" formControlName="name" />
+          @if (name.invalid && name.touched) {
+          <p class="text-danger">Nombre es un campo obligatorio</p>
+          }
+        </fieldset>
+      </div>
+
+      <div class="input-group">
+        <button type="button" class="btn btn-secondary w-50 mt-3" (click)="close({})">
+          Cancelar
+        </button>
+        <button class="btn btn-primary w-50 mt-3" [disabled]="roleForm.invalid">
+          Crear Rol
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

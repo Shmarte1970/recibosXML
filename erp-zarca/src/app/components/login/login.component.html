@@ -1,0 +1,44 @@
+<div style="text-align:right;"  >
+  <app-reloj></app-reloj>
+</div>
+<section class="login-section text-center">
+  <h1 class="mb-5">Login</h1>
+  <form class="login-form card p-4" (submit)="login()" [formGroup]="loginForm">
+    <fieldset class="form-group mb-3">
+      <label for="username">Username</label>
+      <input
+        id="username"
+        class="form-control"
+        placeholder="username"
+        formControlName="username"
+      />
+      @if (username.invalid && username.touched) {
+      <p class="text-danger">username is required</p>
+      }
+    </fieldset>
+    <fieldset class="form-group mb-3">
+      <label for="password">Password</label>
+      <div class="password-input-container">
+
+        <input
+          [type]="showPass"
+          id="password"
+          class="form-control"
+          placeholder="password"
+          formControlName="password"
+        />
+        <div class="password-icon">
+          <i class="fa fa-eye-slash move-eye" (click)="togglePassword()"></i>
+        </div>
+      </div>
+
+      @if (password.invalid && password.touched) {
+      <p class="text-danger">password is required</p>
+      }
+    </fieldset>
+
+    <button class="btn btn-primary" [disabled]="loginForm.invalid">
+      Login
+    </button>
+  </form>
+</section>

@@ -1,0 +1,24 @@
+<section class="modal-form delete-modal" (click)="close()">
+  <div class="form-container" (click)="$event.stopPropagation()">
+    <div class="close-modal" (click)="close()">×</div>
+
+    <h2 class="mb-4">Eliminar {{ resource }}</h2>
+    <p>
+      ¿Estás seguro de que desea eliminar el registro de {{ resource }} con id
+      {{ resourceId }}?
+    </p>
+
+    <div class="input-group">
+      <button
+        type="button"
+        class="btn btn-secondary w-50 mt-3"
+        (click)="close()"
+      >
+        Cancelar
+      </button>
+      <button class="btn btn-primary w-50 mt-3" (click)="delete()">
+        Eliminar {{ resource }}
+      </button>
+    </div>
+  </div>
+</section>

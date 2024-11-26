@@ -1,0 +1,88 @@
+<div class="posicion">
+  <h1 class="leflot">Roles</h1>
+	<h1 class="rightlot">
+		Usuario:
+		<span class="colorp">{{userName}}</span>
+    <app-reloj></app-reloj>
+	</h1>
+</div>
+
+<div class="card">
+  <div class="card-head">
+    @if (isAdmin()) {
+    <div class="text-center flex-end mb3">
+      <button
+        type="button"
+        class="btn btn-outline-primary btn-lg btn-blog mt-3 mb-3"
+        (click)="openCreateModal()"
+      >
+        Nuevo Rol
+      </button>
+    </div>
+    }
+
+    <div class="table-container">
+      <table class="table table-hover">
+        <thead class="table-light">
+          <tr>
+            <th class="id">#</th>
+            <th class="title">Nombre</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (role of roles; track role.id) {
+          <tr
+            [ngClass]="{ 'table-success': role.id === selectedRoleId }"
+            (click)="selectRole(role)"
+            (dblclick)="openEditModal()"
+          >
+            <td class="id">{{ role.id }}</td>
+            <td class="title">{{ role.name }}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    @if (isAdmin()) {
+    <div class="d-flex align-items-start flex-column mb-3">
+      <div class="ms-auto p-2">
+        <button
+          class="btn btn-outline-secondary me-3"
+          [disabled]="!selectedRoleId"
+          (click)="openEditModal()"
+        >
+          Editar
+        </button>
+        <button
+          class="btn btn-outline-danger"
+          [disabled]="!selectedRoleId"
+          (click)="openDeleteModal()"
+        >
+          Eliminar
+        </button>
+      </div>
+    </div>
+    }
+  </div>
+</div>
+
+@if (showCreateModal) {
+<app-create-role-modal
+  (closeModal)="closeCreateModal($event)"
+  @toggleModal
+></app-create-role-modal>
+} @else if (showEditModal) {
+<app-edit-role-modal
+  [selectedRole]="selectedRole"
+  (closeModal)="closeEditModal($event)"
+  @toggleModal
+></app-edit-role-modal>
+} @else if (showDeleteModal) {
+<app-delete-modal
+  [resourceId]="selectedRoleId"
+  resource="rol"
+  (closeModal)="closeDeleteModal()"
+  (deleteResource)="deleteRole()"
+  @toggleModal
+></app-delete-modal>
+}

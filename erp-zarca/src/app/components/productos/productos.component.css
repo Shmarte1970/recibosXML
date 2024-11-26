@@ -1,0 +1,36 @@
+.formato {
+    background-color: lightblue;
+    border: 1px solid blue;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  
+  .backgrounddialog {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: 10000;
+  
+    .dialog {
+      position: fixed;
+      top: calc(50% - 130px);
+      left: calc(50% - 100px);
+      width: 260px;
+      height: 200px;
+      background-color: white;
+      padding: 25px;
+      align-content: center;
+      text-align: -webkit-center;
+      border: 1px solid #0d6efd;
+      border-radius: 0.5rem;
+  
+      button {
+        margin: 0px 10px;
+        width: 75px;
+      }
+    }
+  }

@@ -1,0 +1,75 @@
+<ng-container [formGroup]="form">
+    <label
+        [for]="control"
+        class="form-label">
+        {{name}}
+    </label>
+    <div class="input-group">
+        <select
+            *ngIf="module.cacheTable[table]"
+            [id]="control"
+            [formControlName]="control"
+            [ngClass]="c[control].dirty || c[control].touched ? c[control].errors ? 'is-invalid' : 'is-valid':''"
+            [matTooltip]="error.Error(c,control)"
+            (change)="changex.emit($event)"
+            class="form-select">
+            <option value *ngIf="nulo"></option>
+            <ng-container
+                *ngFor="let item of module.cacheTable[table].data.rows">
+                <ng-container
+                    *ngIf="!dep || item[dep]==form.controls[dep].value">
+                    <option [value]="item[id]">
+                        {{ item[value] }} {{ value2?item[value2]:'' }}
+                    </option>
+                </ng-container>
+            </ng-container>
+        </select>
+        <button
+            *ngIf="add"
+            (click)="OpenModal()"
+            type="button"
+            class="btn btn-outline-primary">
+            + añadir
+        </button>
+    </div>
+</ng-container>
+<ng-container *ngIf="openModal">
+    <section
+        class="modal-form"
+        style="height: 70vh;">
+        <div class="form-container">
+            <div
+                (click)="openModal=false"
+                class="close-modal">
+                ×
+            </div>
+            <h2 style="margin: 0;">Crear {{ name }}</h2>
+            <div
+                [formGroup]="SelectForm"
+                class="row container contenido over"
+                style="padding: 2.5px;">
+                <fieldset class="form-group col-12">
+                    <app-componente-input
+                        [control]="value"
+                        [name]="name"
+                        [form]="SelectForm"
+                        (input)="mayuscula?SetValue():null">
+                    </app-componente-input>
+                </fieldset>
+            </div>
+            <div class="input-group">
+                <button
+                    (click)="openModal=false"
+                    type="button"
+                    class="btn btn-secondary w-50 mt-3">
+                    Cancelar
+                </button>
+                <button
+                    (click)="Crear()"
+                    class="btn btn-primary w-50 mt-3">
+                    Crear {{ name }}
+                </button>
+            </div>
+        </div>
+    </section>
+</ng-container>

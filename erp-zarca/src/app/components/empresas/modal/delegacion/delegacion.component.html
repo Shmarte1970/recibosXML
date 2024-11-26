@@ -1,0 +1,443 @@
+<div class="row">
+    <div class="col">
+        <h2>Delegación</h2>
+    </div>
+    <div class="col">
+        <button
+            (click)="Accion='Crear';OpenModal()"
+            type="button"
+            class="btn btn-outline-primary">
+            Nuevo
+        </button>
+    </div>
+    <div class="col">
+        <button
+            [disabled]="!sData"
+            (click)="Accion='Editar';OpenModal()"
+            type="button"
+            class="btn btn-outline-primary">
+            Editar
+        </button>
+    </div>
+    <div class="col">
+        <button
+            [disabled]="!sData"
+            (click)="Accion='Activar';OpenModal()"
+            type="button"
+            class="btn btn-outline-primary">
+            Activar
+        </button>
+    </div>
+</div>
+<div class="card">
+    <div class="card-head">
+        <div
+            [style.height.px]="2*49+36.5"
+            class="table-responsive table-container">
+            <table class="table table-hover text-nowrap">
+                <thead class="table-light">
+                    <tr>
+                        <td *ngFor="let column of columns">{{ column.Name
+                            }}</td>
+                    </tr>
+                </thead>
+                <tbody *ngIf="module.cacheTable['zcdelegacion']">
+                    <ng-container
+                        *ngFor="let data of module.cacheTable['zcdelegacion'].data.rows; index as i">
+                        <tr
+                            *ngIf="Filtrar(data)"
+                            (dblclick)="sData=data;Accion='Editar';OpenModal()"
+                            (click)="sData=sData===data?null:data">
+                            <ng-container *ngFor="let column of columns">
+                                <td
+                                    [style.backgroundColor]="sData===data?'darkgray':''"
+                                    [style.color]="data.enable?'':'lightgray'">
+                                    <p>{{ data[column.Key] }}</p>
+                                </td>
+                            </ng-container>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<ng-container *ngIf="openModal">
+    <section class="modal-form">
+        <div class="form-container">
+            <div
+                (click)="openModal=false"
+                class="close-modal">
+                ×
+            </div>
+            <h2 style="margin: 0;">{{ Accion }} Delegación</h2>
+            <div style="height: 70vh;overflow-y: auto;">
+                <div
+                    [formGroup]="DelegacionForm"
+                    class="row container contenido over">
+                    <fieldset class="form-group col-9">
+                        <app-componente-input
+                            [form]="DelegacionForm"
+                            control="nombreDelegacion"
+                            name="Delegación">
+                        </app-componente-input>
+                    </fieldset>
+                    <fieldset class="form-group col-3">
+                        <app-componente-checkbox
+                            [form]="DelegacionForm"
+                            control="envioFacturas"
+                            name="Envio Factura">
+                        </app-componente-checkbox>
+                    </fieldset>
+                    <fieldset class="form-group col-3">
+                        <app-componente-select
+                            [form]="DelegacionForm"
+                            (changex)="Module.EmpresaForm.patchValue({urbanaDelegacion:$event.target.selectedOptions[0].textContent.trim()})"
+                            control="zcurbanaIdurbana"
+                            name="Urbana"
+                            table="zcurbana"
+                            id="idurbana"
+                            value="urbana">
+                        </app-componente-select>
+                    </fieldset>
+                    <fieldset class="form-group col-9">
+                        <app-componente-input
+                            [form]="DelegacionForm"
+                            control="direccionFiscalDelegacion"
+                            name="Dirección">
+                        </app-componente-input>
+                    </fieldset>
+                    <fieldset class="form-group col-6">
+                        <app-componente-select
+                            [form]="DelegacionForm"
+                            [add]="true"
+                            (changex)="Module.EmpresaForm.patchValue({paisDelegacion:$event.target.selectedOptions[0].textContent.trim()})"
+                            control="countryId"
+                            name="Pais"
+                            table="countries"
+                            id="id"
+                            value="name">
+                        </app-componente-select>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="!DelegacionForm.controls['countryId'].value"
+                        class="form-group col-6">
+                        <app-componente-select
+                            [form]="DelegacionForm"
+                            [add]="true"
+                            (changex)="Module.EmpresaForm.patchValue({provinciaDelegacion:$event.target.selectedOptions[0].textContent.trim()})"
+                            control="provinceId"
+                            name="Provincia"
+                            table="provinces"
+                            dep="countryId"
+                            id="id"
+                            value="name">
+                        </app-componente-select>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="!DelegacionForm.controls['provinceId'].value"
+                        class="form-group col-6">
+                        <app-componente-select
+                            [form]="DelegacionForm"
+                            [add]="true"
+                            (changex)="Module.EmpresaForm.patchValue({poblacionDelegacion:$event.target.selectedOptions[0].textContent.trim()})"
+                            control="cityId"
+                            name="Ciudad"
+                            table="cities"
+                            dep="provinceId"
+                            id="id"
+                            value="name">
+                        </app-componente-select>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="!DelegacionForm.controls['cityId'].value"
+                        class="form-group col-6">
+                        <app-componente-select
+                            [form]="DelegacionForm"
+                            [add]="true"
+                            (changex)="Module.EmpresaForm.patchValue({cpostalDelegacion:$event.target.selectedOptions[0].textContent.trim()})"
+                            control="postcodeId"
+                            name="C.P."
+                            table="postcodes"
+                            dep="cityId"
+                            id="id"
+                            value="postcode">
+                        </app-componente-select>
+                    </fieldset>
+                    <fieldset class="form-group col-4">
+                        <app-componente-input
+                            [form]="DelegacionForm"
+                            control="telefonoDelegacion"
+                            name="Telefono-1">
+                        </app-componente-input>
+                    </fieldset>
+                    <fieldset class="form-group col-4">
+                        <app-componente-input
+                            [form]="DelegacionForm"
+                            control="telefono2Delegacion"
+                            name="Telefono-2">
+                        </app-componente-input>
+                    </fieldset>
+                    <fieldset class="form-group col-4">
+                        <app-componente-input
+                            [form]="DelegacionForm"
+                            control="emailDelegacion"
+                            name="e-mail de facturación">
+                        </app-componente-input>
+                    </fieldset>
+                    <fieldset class="form-group col-6">
+                        <app-componente-input
+                            [form]="DelegacionForm"
+                            control="palabraclaveDelegacion"
+                            name="Palabra Clave">
+                        </app-componente-input>
+                    </fieldset>
+                    <fieldset class="form-group col-6">
+                        <app-componente-input
+                            [form]="DelegacionForm"
+                            control="horarioDelegacion"
+                            name="Horario">
+                        </app-componente-input>
+                    </fieldset>
+                    <fieldset
+                        *ngIf="Accion!=='Crear'"
+                        class="form-group col-6"
+                        style="margin: 5px 0px;">
+                        <div class="row">
+                            <div class="col">
+                                <h2>Comercial</h2>
+                            </div>
+                            <div class="col">
+                                <button
+                                    (click)="Accion_Comercial='Asignar';OpenModal_Comercial()"
+                                    type="button"
+                                    class="btn btn-outline-primary">
+                                    Asignar
+                                </button>
+                            </div>
+                            <div class="col">
+                                <button
+                                    [disabled]="!sData_Comercial"
+                                    (click)="Accion_Comercial='Desasignar';OpenModal_Comercial()"
+                                    type="button"
+                                    class="btn btn-outline-primary">
+                                    Desasignar
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-head">
+                                <div
+                                    [style.height.px]="2*49+36.5"
+                                    style="overflow-y: scroll;"
+                                    class="table-responsive table-container">
+                                    <table
+                                        class="table table-hover text-nowrap">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <ng-container
+                                                    *ngFor="let column of columns_comercial">
+                                                    <td>{{ column.Name }}</td>
+                                                </ng-container>
+                                            </tr>
+                                        </thead>
+                                        <tbody
+                                            *ngIf="module.cacheTable['zccomercial']">
+                                            <ng-container
+                                                *ngFor="let data of module.cacheTable['zccomercial'].data.rows; index as i">
+                                                <tr
+                                                    *ngIf="Filtrar_comercial(data)"
+                                                    (click)="sData_Comercial=sData_Comercial===data?null:data">
+                                                    <ng-container
+                                                        *ngFor="let column of columns_comercial">
+                                                        <td
+                                                            [style.backgroundColor]="sData_Comercial===data?'darkgray':''">
+                                                            <p>
+                                                                {{
+                                                                data[column.Key]
+                                                                }}
+                                                            </p>
+                                                        </td>
+                                                    </ng-container>
+                                                </tr>
+                                            </ng-container>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset
+                        *ngIf="Accion!=='Crear'"
+                        class="form-group col-6"
+                        style="margin: 5px 0px;">
+                        <div class="row">
+                            <div class="col">
+                                <h2>Contacto</h2>
+                            </div>
+                            <div class="col">
+                                <button
+                                    (click)="Accion_Contacto='Asignar';OpenModal_Contacto()"
+                                    type="button"
+                                    class="btn btn-outline-primary">
+                                    Asignar
+                                </button>
+                            </div>
+                            <div class="col">
+                                <button
+                                    [disabled]="!sData_Contacto"
+                                    (click)="Accion_Contacto='Desasignar';OpenModal_Contacto()"
+                                    type="button"
+                                    class="btn btn-outline-primary">
+                                    Desasignar
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-head">
+                                <div
+                                    [style.height.px]="2*49+36.5"
+                                    style="overflow-y: scroll;"
+                                    class="table-responsive table-container">
+                                    <table
+                                        class="table table-hover text-nowrap">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <ng-container
+                                                    *ngFor="let column of columns_contacto">
+                                                    <td>{{ column.Name }}</td>
+                                                </ng-container>
+                                            </tr>
+                                        </thead>
+                                        <tbody
+                                            *ngIf="module.cacheTable['zccontactos']">
+                                            <ng-container
+                                                *ngFor="let data of module.cacheTable['zccontactos'].data.rows; index as i">
+                                                <tr
+                                                    *ngIf="Filtrar_contacto(data)"
+                                                    (click)="sData_Contacto=sData_Contacto===data?null:data">
+                                                    <ng-container
+                                                        *ngFor="let column of columns_contacto">
+                                                        <td
+                                                            [style.backgroundColor]="sData_Contacto===data?'darkgray':''">
+                                                            <p>
+                                                                {{
+                                                                data[column.Key]
+                                                                }}
+                                                            </p>
+                                                        </td>
+                                                    </ng-container>
+                                                </tr>
+                                            </ng-container>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="input-group">
+                <button
+                    (click)="openModal=false"
+                    type="button"
+                    class="btn btn-secondary w-50 mt-3">
+                    Cancelar
+                </button>
+                <button
+                    (click)="DoModal()"
+                    class="btn btn-primary w-50 mt-3">
+                    {{ Accion }} Delegación
+                </button>
+            </div>
+        </div>
+    </section>
+</ng-container>
+
+<ng-container *ngIf="openModal_Comercial">
+    <section class="modal-form">
+        <div class="form-container">
+            <div
+                (click)="openModal_Comercial=false"
+                class="close-modal">
+                ×
+            </div>
+            <h2 style="margin: 0;">{{ Accion_Comercial }} Comercial</h2>
+            <div style="height: 70vh;overflow-y: auto;">
+                <div
+                    [formGroup]="ComercialForm"
+                    class="row container contenido over"
+                    style="padding: 2.5px;">
+                    <fieldset class="form-group col-12">
+                        <app-componente-select
+                            [form]="ComercialForm"
+                            control="idzccomercial"
+                            name="Comercial"
+                            table="zccomercial"
+                            id="idcomercial"
+                            value="nombreComercial"
+                            value2="apellidosComercial">
+                        </app-componente-select>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="input-group">
+                <button
+                    (click)="openModal_Comercial=false"
+                    type="button"
+                    class="btn btn-secondary w-50 mt-3">
+                    Cancelar
+                </button>
+                <button
+                    (click)="DoModal_Comercial()"
+                    class="btn btn-primary w-50 mt-3">
+                    {{ Accion_Comercial }} Comercial
+                </button>
+            </div>
+        </div>
+    </section>
+</ng-container>
+
+<ng-container *ngIf="openModal_Contacto">
+    <section class="modal-form">
+        <div class="form-container">
+            <div
+                (click)="openModal_Contacto=false"
+                class="close-modal">
+                ×
+            </div>
+            <h2 style="margin: 0;">{{ Accion_Contacto }} Contacto</h2>
+            <div style="height: 70vh;overflow-y: auto;">
+                <div
+                    [formGroup]="ContactoForm"
+                    class="row container contenido over"
+                    style="padding: 2.5px;">
+                    <fieldset class="form-group col-12">
+                        <app-componente-select
+                            [form]="ContactoForm"
+                            control="idzccontacto"
+                            name="Contacto"
+                            table="zccontactos"
+                            id="idContacto"
+                            value="nombreContacto"
+                            value2="apellidosContacto">
+                        </app-componente-select>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="input-group">
+                <button
+                    (click)="openModal_Contacto=false"
+                    type="button"
+                    class="btn btn-secondary w-50 mt-3">
+                    Cancelar
+                </button>
+                <button
+                    (click)="DoModal_Contacto()"
+                    class="btn btn-primary w-50 mt-3">
+                    {{ Accion_Contacto }} Contacto
+                </button>
+            </div>
+        </div>
+    </section>
+</ng-container>

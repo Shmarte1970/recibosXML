@@ -1,0 +1,9 @@
+<ng-container [formGroup]="form">
+    <label [for]="control">
+        {{ name }}
+    </label>
+    <textarea [id]="control" [placeholder]="placeholder || name" [rows]="rows" [formControlName]="control"
+        class="form-control" style="resize: none;"
+        [ngClass]="c[control].dirty || c[control].touched ? c[control].errors ? 'is-invalid' : 'is-valid':''"
+        [matTooltip]="error.Error(c,control)"></textarea>
+</ng-container>

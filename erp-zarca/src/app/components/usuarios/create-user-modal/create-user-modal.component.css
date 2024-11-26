@@ -1,0 +1,10 @@
+.move-eye{
+    position: relative;
+    left: 90%;
+    z-index: 100;
+    top: -29px;
+}
+
+.move-eye:hover{
+    cursor: pointer;
+}

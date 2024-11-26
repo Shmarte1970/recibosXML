@@ -1,0 +1,96 @@
+<section class="modal-form">
+    <div class="form-container">
+        <div
+            class="close-modal"
+            (click)="close({})">
+            ×
+        </div>
+        <h2 class="mb-4">Editar Rol</h2>
+        <form
+            class="h-100"
+            [formGroup]="roleForm"
+            (submit)="editRole()">
+            <div class="overflow-auto h-75 pe-4">
+                <fieldset class="form-group mb-3">
+                    <label for="name">Nombre</label>
+                    <input
+                        id="name"
+                        class="form-control"
+                        placeholder="Nombre"
+                        formControlName="name">
+                </fieldset>
+                <!--<fieldset class="form-group col-12">
+                    <mat-form-field style="width: 100%;">
+                        <mat-label>Seleccionar permisos</mat-label>
+                        <mat-select
+                            formControlName="permise"
+                            placeholder="Selecciona los permisos"
+                            multiple
+                        >
+                            <ng-container *ngFor="let item of module.cacheTable['zcpermise'].data.rows">
+                                <mat-option [value]="item.idpermise">
+                                    {{ item.idpermise }} - {{ item.permise }}
+                                </mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </mat-form-field>
+                </fieldset>-->
+                <fieldset class="form-group col-12">
+                    <span>
+                        Listado de permiso
+                    </span>
+                    <div class="card">
+                        <div class="card-head">
+                            <div
+                                [style.height.px]="5*53"
+                                class="table-responsive table-container">
+                                <table class="table table-hover text-nowrap">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <td
+                                                *ngFor="let column of columnsName;index as i">{{
+                                                column }}</td>
+                                            <td> Active </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container
+                                            *ngFor="let item of module.cacheTable['zcpermise'].data.rows">
+                                            <tr>
+                                                <ng-container
+                                                    *ngFor="let column of columnsInfo">
+                                                    <td>
+                                                        <p>{{ item[column]
+                                                            }}</p>
+                                                    </td>
+                                                </ng-container>
+                                                <td>
+                                                    <mat-checkbox
+                                                        [checked]="roleForm.controls['permise'].value.includes(item.idpermise)"
+                                                        (click)="checkBoxPermise($event,item)"></mat-checkbox>
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="input-group">
+                <button
+                    type="button"
+                    class="btn btn-secondary w-50 mt-3"
+                    (click)="close({})">
+                    Cancelar
+                </button>
+                <button
+                    class="btn btn-primary w-50 mt-3"
+                    [disabled]="roleForm.invalid">
+                    Editar Rol
+                </button>
+            </div>
+        </form>
+    </div>
+</section>

@@ -1,0 +1,43 @@
+.disabled-user {
+  td {
+    color: lightgray;
+  }
+}
+
+@media (max-width: 1024px) {
+  .id,
+  .email {
+    display: none;
+  }
+}
+
+@media (max-width: 740px) {
+  .name,
+  .surname {
+    display: none;
+  }
+}
+
+.current-order::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 8px 4px 0 4px;
+  border-color: gray transparent transparent transparent;
+  position: absolute;
+  margin-top: 3px;
+  margin-left: 5px;
+}
+
+.descendant {
+  .current-order::after {
+    border-width: 0 4px 8px 4px;
+    border-color: transparent transparent gray transparent;
+    margin-top: 9px;
+  }
+}
+
+.clickable{
+  cursor: pointer;
+}

@@ -1,0 +1,162 @@
+<div class="posicion">
+  <h1 class="leflot">Usuarios</h1>
+	<h1 class="rightlot">
+		Usuario:
+		<span class="colorp">{{userName}}</span>
+    <app-reloj></app-reloj>
+	</h1>
+</div>
+
+<div class="card">
+  <div class="card-head">
+    @if (isAdmin()) {
+    <div class="text-center flex-end mb3">
+      <button
+        type="button"
+        class="btn btn-outline-primary btn-lg btn-blog mt-3 mb-3"
+        (click)="openCreateModal()">
+        Nuevo Usuario
+      </button>
+    </div>
+    }
+
+    <div class="input-group rounded">
+      <input
+        [(ngModel)]="searchText"
+        (input)="onSearchChange()"
+        type="search"
+        class="form-control rounded"
+        placeholder="Búsqueda completa"
+        aria-label="Search"
+        aria-describedby="search-addon" />
+      <span class="input-group-text border-0" id="search-addon">
+        <i class="fas fa-search"></i>
+      </span>
+    </div>
+    <div class="table-responsive table-container">
+      <table class="table table-hover text-nowrap">
+        <thead class="table-light">
+          <tr [ngClass]="{ descendant }">
+            <th
+              [ngClass]="{ 'current-order': currentOrder === 'id' }"
+              class="id"
+              (click)="orderBy('id')"><span class="clickable"> #</span>
+            </th>
+            <th
+              [ngClass]="{ 'current-order': currentOrder === 'name' }"
+              class="name">
+              <!-- <input
+                [(ngModel)]="searchName"
+                (input)="searchByName()"
+                type="search"
+                class="form-control rounded"
+                placeholder="Búsqueda por nombre"
+                aria-label="Search"
+                aria-describedby="search-addon"
+              /> -->
+              <span class="clickable" (click)="orderBy('name')"> Nombre</span>
+            </th>
+            <th
+              [ngClass]="{ 'current-order': currentOrder === 'surnames' }"
+              class="surname"
+              (click)="orderBy('surnames')"><span class="clickable">
+                Apellidos</span>
+            </th>
+            <th [ngClass]="{ 'current-order': currentOrder === 'username' }">
+              <!--  <input
+                [(ngModel)]="searchUsername"
+                (input)="searchByUsername()"
+                type="search"
+                class="form-control rounded"
+                placeholder="Búsqueda por nombre de usuario"
+                aria-label="Search"
+                aria-describedby="search-addon"
+              /> -->
+              <span class="clickable" (click)="orderBy('username')">
+                Nombre Usuario</span>
+            </th>
+            <th
+              [ngClass]="{ 'current-order': currentOrder === 'email' }"
+              class="email"
+              (click)="orderBy('email')">
+              <span class="clickable">Email</span>
+            </th>
+            <th>Teléfono</th>
+            <th
+              [ngClass]="{ 'current-order': currentOrder === 'enabled' }"
+              (click)="orderBy('enabled')">
+              <span class="clickable"> Activo</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (user of orderedUsers; track user.id) {
+          <tr
+            [ngClass]="{
+              'table-success': user.id === selectedUserId,
+              'disabled-user': !user.enabled
+            }"
+            (click)="selectUser(user)"
+            (dblclick)="openEditModal()">
+            <td class="id">{{ user.id }}</td>
+            <td class="name">{{ user.name }}</td>
+            <td class="surname">{{ user.surnames }}</td>
+            <td>{{ user.username }}</td>
+            <td class="email">{{ user.email }}</td>
+            <td>{{ user.phone }}</td>
+            <td>
+              @if (user.enabled) {
+              <i class="fa fa-check"></i>
+              } @else {
+              <i class="fa fa-x"></i>
+              }
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    @if (isAdmin()) {
+    <div class="d-flex align-items-start flex-column mb-3">
+      <div class="ms-auto p-2">
+        <button
+          class="btn btn-outline-secondary me-3"
+          [disabled]="!selectedUserId"
+          (click)="toggleEnable()">
+          Activar/Desactivar
+        </button>
+        <button
+          class="btn btn-outline-success me-3"
+          [disabled]="!selectedUserId"
+          (click)="openEditModal()">
+          Editar
+        </button>
+        <button
+          class="btn btn-outline-danger"
+          [disabled]="!selectedUserId"
+          (click)="openDeleteModal()">
+          Eliminar
+        </button>
+      </div>
+    </div>
+    }
+  </div>
+</div>
+
+@if (showCreateModal) {
+<app-create-user-modal
+  (closeModal)="closeCreateModal($event)"
+  @toggleModal></app-create-user-modal>
+}@else if (showEditModal) {
+<app-edit-user-modal
+  [selectedUser]="selectedUser"
+  (closeModal)="closeEditModal($event)"
+  @toggleModal></app-edit-user-modal>
+} @else if (showDeleteModal) {
+<app-delete-modal
+  [resourceId]="selectedUserId"
+  resource="usuario"
+  (closeModal)="closeDeleteModal()"
+  (deleteResource)="deleteUser()"
+  @toggleModal></app-delete-modal>
+}

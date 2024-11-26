@@ -1,0 +1,34 @@
+idTempo: 1
+numrebut: 1
+import: 859.00
+compte: ES5801825424570208001994
+date: 2024-09-02 00:00:00
+nom: 
+numfactura: F24002482
+datevenciment: 2024-10-02 00:00:00
+cif: 
+error: CIF incorrecto. Falta nombre. 
+
+idTempo: 2
+numrebut: 1
+import: 1013.00
+compte: ES5801825424570208001994
+date: 2024-09-02 00:00:00
+nom: 
+numfactura: F24002483
+datevenciment: 2024-10-02 00:00:00
+cif: 
+error: CIF incorrecto. Falta nombre. 
+
+idTempo: 3
+numrebut: 1
+import: 1121.00
+compte: ES5801825424570208001994
+date: 2024-09-02 00:00:00
+nom: 
+numfactura: F24002484
+datevenciment: 2024-10-02 00:00:00
+cif: 
+error: CIF incorrecto. Falta nombre. 
+
+Cantidad de registros: 3

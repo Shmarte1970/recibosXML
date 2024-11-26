@@ -1,0 +1,150 @@
+<div class="row" style="margin-top: 10px;">
+    <div class="col">
+        <h2>Forma de Pago</h2>
+    </div>
+    <div class="col">
+        <button
+            (click)="Accion='Asignar';OpenModal()"
+            type="button"
+            class="btn btn-outline-primary">
+            Asignar
+        </button>
+    </div>
+    <div class="col">
+        <button
+            [disabled]="!sData"
+            (click)="Accion='Editar';OpenModal()"
+            type="button"
+            class="btn btn-outline-primary">
+            Editar
+        </button>
+    </div>
+    <div class="col">
+        <button
+            [disabled]="!sData"
+            (click)="Accion='Desasignar';DoModal()"
+            type="button"
+            class="btn btn-outline-primary">
+            Eliminar
+        </button>
+    </div>
+</div>
+<div class="card">
+    <div class="card-head">
+        <div
+            [style.height.px]="2*49+36.5"
+            class="table-responsive table-container">
+            <table class="table table-hover text-nowrap">
+                <thead class="table-light">
+                    <tr>
+                        <td> % Pago </td>
+                        <td> Forma de Pago </td>
+                        <td> Día de pago </td>
+                        <td> Vencimiento </td>
+                    </tr>
+                </thead>
+                <tbody *ngIf="module.cacheTable['zcempresapagoscobro']">
+                    <ng-container
+                        *ngFor="let data of filtro; index as i">
+                        <tr
+                            (dblclick)="sData=data;Accion='Editar';OpenModal()"
+                            (click)="sData=sData===data?null:data">
+                            <td
+                                [style.backgroundColor]="sData===data?'darkgray':''">
+                                <p>{{ data.porcentaje }} %</p>
+                            </td>
+                            <td
+                                [style.backgroundColor]="sData===data?'darkgray':''">
+                                <p>{{ data.descripcionFormaPago }}</p>
+                            </td>
+                            <td
+                                [style.backgroundColor]="sData===data?'darkgray':''">
+                                <p>Día {{ data.diaPago }}</p>
+                            </td>
+                            <td
+                                [style.backgroundColor]="sData===data?'darkgray':''">
+                                <p> {{ data.desVen }}</p>
+                            </td>
+
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<ng-container *ngIf="openModal">
+    <section class="modal-form">
+        <div class="form-container">
+            <div
+                (click)="openModal=false"
+                class="close-modal">
+                ×
+            </div>
+            <h2 style="margin: 0;">{{ Accion }} Forma de Pago</h2>
+            <div style="height: 70vh;overflow-y: auto;">
+                <div
+                    [formGroup]="FormaPagoForm"
+                    class="row container contenido over"
+                    style="padding: 2.5px;">
+                    <fieldset class="form-group col-12">
+                        <app-componente-select
+                            [form]="FormaPagoForm"
+                            control="idFormaPago"
+                            name="Forma de pago"
+                            table="zcformasdepago"
+                            id="idFormasDePago"
+                            value="descripcionPagoCobro">
+                        </app-componente-select>
+                    </fieldset>
+                    <fieldset class="form-group col-12">
+                        <app-componente-select
+                            [form]="FormaPagoForm"
+                            control="diaPago"
+                            name="Dia de Pago"
+                            table="zcdiapago"
+                            id="dia"
+                            value="dia">
+                        </app-componente-select>
+                    </fieldset>
+                    <fieldset class="form-group col-12">
+                        <app-componente-select
+                            [form]="FormaPagoForm"
+                            control="porcentaje"
+                            name="% de pago"
+                            table="zcporcentaje"
+                            id="porcentaje"
+                            value="porcentaje">
+                        </app-componente-select>
+                    </fieldset>
+                    <fieldset class="form-group col-12">
+                        <app-componente-select
+                            (changex)="FormaPagoForm.patchValue({desVen:$event.target.selectedOptions[0].textContent.trim()})"
+                            [form]="FormaPagoForm"
+                            control="idVen"
+                            name="Vencimiento"
+                            table="zcvencimiento"
+                            id="idVencimiento"
+                            value="diavencimiento"
+                            value2="descVencimiento">
+                        </app-componente-select>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="input-group">
+                <button
+                    (click)="openModal=false"
+                    type="button"
+                    class="btn btn-secondary w-50 mt-3">
+                    Cancelar
+                </button>
+                <button
+                    (click)="DoModal()"
+                    class="btn btn-primary w-50 mt-3">
+                    {{ Accion }} Pago
+                </button>
+            </div>
+        </div>
+    </section>
+</ng-container>

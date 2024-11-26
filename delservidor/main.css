@@ -1,0 +1,285 @@
+/* Estilo general */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9; /* Fondo suave en tono pastel */
+    color: #333; /* Texto en gris oscuro */
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: left;
+    margin-left: 0;
+    margin-right: auto;
+    width: fit-content;
+    color: #333;
+    background-color: #fff; /* Fondo blanco */
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+.form-group {
+    margin-bottom: 15px; /* Espacio entre los elementos */
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555; /* Texto en gris más claro */
+}
+
+input[type="date"], select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff; /* Fondo blanco */
+    color: #333; /* Texto en gris oscuro */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    background-color: #a3d5ff; /* Color primario en tono pastel */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #83bdf2; /* Color primario más oscuro al pasar el ratón */
+}
+
+.datos-defectuosos-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.datos-defectuosos {
+    flex-grow: 1;
+    margin-right: 20px;
+    border: 1px solid #ff6b6b;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #fff5f5;
+}
+
+.report-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+}
+
+.report-button {
+    background-color: #4c7faf; /* azul */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    align-self: flex-start;
+}
+
+.report-button:hover {
+    background-color: #1f57a0; /* Verde más oscuro */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #fff; /* Fondo blanco */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Estilo para el mensaje flotante */
+.message-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #fdf3e7; /* Fondo blanco roto anaranjado */
+    color: #000; /* Texto en negro */
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    font-size: 16px;
+    z-index: 1000;
+    display: none; /* Oculto por defecto */
+}
+
+.message-container.show {
+    display: block; /* Mostrar el mensaje cuando se activa */
+}
+
+.table-container {
+    max-height: 400px; /* Ajusta esta altura según tus necesidades */
+    overflow-y: auto; /* Agrega scrollbar vertical solo para el cuerpo de la tabla */
+    border: 1px solid #ccc; /* Opcional: para añadir un borde alrededor de la tabla */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+table th {
+    background-color: #f2f2f2;
+    position: sticky; 
+    top: 0; 
+    z-index: 1; 
+}
+
+td input[type="checkbox"] {
+    display: block;
+    margin: 0 auto; 
+}
+
+
+td.checkbox-column, th.checkbox-column {
+    text-align: center; 
+    vertical-align: middle; 
+}
+
+.form-group{
+    margin-bottom: 15px;
+}
+
+.form-group.spaced {
+    margin-top: 20px;
+}
+
+
+.form-group.inline {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;  
+    justify-content: flex-start;    
+    gap: 10px; 
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+label {
+    margin-right: 10px;
+    white-space: nowrap;
+}
+
+
+button.xml-button {
+    background-color: #ff9999; 
+    border: none;
+    margin-left: 30px;
+    padding: 10px 30px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button.xml-button:hover {
+    background-color: #ff6666; 
+}
+
+.datos-defectuosos {
+    margin-top: 20px;
+    border: 1px solid #ff6b6b;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #fff5f5;
+}
+
+.datos-defectuosos h3 {
+    color: #d63031;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.datos-defectuosos .table-container {
+    max-height: 200px; /* Altura para aproximadamente 5 filas */
+    overflow-y: auto;
+}
+
+.datos-defectuosos table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.datos-defectuosos th, 
+.datos-defectuosos td {
+    border: 1px solid #ffb8b8;
+    padding: 8px;
+    text-align: left;
+}
+
+.datos-defectuosos th {
+    background-color: #ffd7d7;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.datos-defectuosos tbody tr:nth-child(even) {
+    background-color: #fff9f9;
+}
+
+/* Estilo para la barra de desplazamiento */
+.datos-defectuosos .table-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+.datos-defectuosos .table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.datos-defectuosos .table-container::-webkit-scrollbar-thumb {
+    background: #ff9999;
+}
+
+.datos-defectuosos .table-container::-webkit-scrollbar-thumb:hover {
+    background: #ff6666;
+}
+
+/* Estilo para el número de factura intermitente */
+.datos-defectuosos .num-factura-error {
+    animation: parpadeo 1s infinite;
+    font-weight: bold;
+}
+
+.correct-count {    
+    color: #4CAF50; /* Verde */
+    font-weight: bold;
+}
+
+.error-count {
+    color: #FF0000; /* Rojo */
+    font-weight: bold;
+    animation: parpadeo 1s infinite;
+}
+
+@keyframes parpadeo {
+    0% { color: #d63031; }
+    50% { color: #ff9999; }
+    100% { color: #d63031; }
+}

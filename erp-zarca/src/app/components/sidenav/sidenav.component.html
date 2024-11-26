@@ -1,0 +1,43 @@
+<div class="sidenav" [ngClass]="isCollapsed ? '' : 'sidenav-expanded'">
+  <div class="logo-container">
+    <button class="logo" (click)="toggleCollapse()">Z</button>
+    @if (!isCollapsed) {
+    <div class="logo-text" @fadeInOut>Zarca</div>
+    <button class="btn-close" @rotate (click)="closeSidenav()">
+      <i class="fa fa-times close-icon"></i>
+    </button>
+    }
+  </div>
+  <ul class="sidenav-nav">
+    @for (data of navData; track $index) { @if (permise.checkPermise(data.roleAccess)){
+    <li class="sidenav-nav-item">
+      <a [title]="data.label" class="sidenav-nav-link" [routerLink]="[data.routeLink]" routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }">
+        <i class="sidenav-link-icon" [class]="data.icon"> </i>
+        @if (!isCollapsed) {
+        <span class="sidenav-link-text">{{ data.label }}</span>
+        }
+      </a>
+    </li>
+    } } @if (!userService.isLoggedIn()) {
+    <li class="sidenav-nav-item">
+      <a class="sidenav-nav-link" routerLink="login" routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }">
+        <i class="sidenav-link-icon fa fa-solid fa-sign-in"></i>
+        @if (!isCollapsed) {
+        <span class="sidenav-link-text" @fadeInOut>Login</span>
+        }
+      </a>
+    </li>
+    } @else {
+    <li class="sidenav-nav-item">
+      <a class="sidenav-nav-link buttonout" routerLink="login" (click)="logout()">
+        <i class="sidenav-link-icon fa fa-solid fa-sign-out"></i>
+        @if (!isCollapsed) {
+        <span class="sidenav-link-text" @fadeInOut>Logout</span>
+        }
+      </a>
+    </li>
+    }
+  </ul>
+</div>

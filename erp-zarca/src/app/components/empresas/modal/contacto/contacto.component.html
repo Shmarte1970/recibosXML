@@ -1,0 +1,168 @@
+<div class="row">
+    <div class="col">
+        <h2>Contacto</h2>
+    </div>
+    <div class="col">
+        <button
+            (click)="Accion='Crear';OpenModal()"
+            type="button"
+            class="btn btn-outline-primary">
+            Nuevo
+        </button>
+    </div>
+    <div class="col">
+        <button
+            [disabled]="!sData"
+            (click)="Accion='Editar';OpenModal()"
+            type="button"
+            class="btn btn-outline-primary">
+            Editar
+        </button>
+    </div>
+</div>
+<div class="card">
+    <div class="card-head">
+        <div
+            [style.height.px]="2*49+36.5"
+            class="table-responsive table-container">
+            <table class="table table-hover text-nowrap">
+                <thead class="table-light">
+                    <tr>
+                        <ng-container *ngFor="let column of columns">
+                            <td>{{ column.Name }}</td>
+                        </ng-container>
+                    </tr>
+                </thead>
+                <tbody *ngIf="module.cacheTable['zccontactos']">
+                    <ng-container
+                        *ngFor="let data of module.cacheTable['zccontactos'].data.rows; index as i">
+                        <tr
+                            *ngIf="Filtrar(data)"
+                            (dblclick)="sData=data;Accion='Editar';OpenModal()"
+                            (click)="sData=sData===data?null:data">
+                            <ng-container *ngFor="let column of columns">
+                                <td
+                                    [style.backgroundColor]="sData===data?'darkgray':''">
+                                    <p>{{ data[column.Key] }}</p>
+                                </td>
+                            </ng-container>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<ng-container *ngIf="openModal">
+    <section class="modal-form">
+        <div class="form-container">
+            <div
+                (click)="openModal=false"
+                class="close-modal">
+                ×
+            </div>
+            <h2 style="margin: 0;">{{ Accion }} Usuario</h2>
+            <div style="height: 70vh;overflow-y: auto;">
+                <div
+                    [formGroup]="ContactoForm"
+                    class="row container contenido over">
+                    <fieldset class="form-group col-12">
+                        <mat-form-field style="width: 100%;">
+                            <mat-label>Delegación</mat-label>
+                            <mat-select
+                                formControlName="delegacion"
+                                placeholder="Selecciona las delegaciones"
+                                multiple>
+                                <ng-container
+                                    *ngFor="let item of module.cacheTable['zcdelegacion'].data.rows">
+                                    <ng-container
+                                        *ngIf="Filtrar_Delegacion(item)">
+                                        <mat-option
+                                            [value]="item.idDelegacion">{{
+                                            item.nombreDelegacion
+                                            }}</mat-option>
+                                    </ng-container>
+                                </ng-container>
+                            </mat-select>
+                        </mat-form-field>
+                    </fieldset>
+                    <fieldset class="form-group col-6">
+                        <app-componente-input
+                            [form]="ContactoForm"
+                            control="nombreContacto"
+                            name="Nombre">
+                        </app-componente-input>
+                    </fieldset>
+                    <fieldset class="form-group col-6">
+                        <app-componente-input
+                            [form]="ContactoForm"
+                            control="apellidosContacto"
+                            name="Apellido">
+                        </app-componente-input>
+                    </fieldset>
+                    <fieldset class="form-group col-6">
+                        <app-componente-input
+                            [form]="ContactoForm"
+                            control="phoneOneContacto"
+                            name="Telefono-1">
+                        </app-componente-input>
+                    </fieldset>
+                    <fieldset class="form-group col-6">
+                        <app-componente-input
+                            [form]="ContactoForm"
+                            control="phoneTwoContacto"
+                            name="Telefono-2">
+                        </app-componente-input>
+                    </fieldset>
+                    <fieldset class="form-group col-6">
+                        <app-componente-input
+                            [form]="ContactoForm"
+                            control="emailContacto"
+                            name="e-mail">
+                        </app-componente-input>
+                    </fieldset>
+                    <fieldset class="form-group col-6">
+                        <app-componente-input
+                            [form]="ContactoForm"
+                            control="horarioContacto"
+                            name="Horario">
+                        </app-componente-input>
+                    </fieldset>
+                    <fieldset class="form-group col-6">
+                        <app-componente-select
+                            [form]="ContactoForm"
+                            [add]="true"
+                            (changex)="ContactoForm.patchValue({nomCargo:$event.target.selectedOptions[0].textContent.trim()})"
+                            control="idCargo"
+                            name="Cargo"
+                            table="zccargo"
+                            id="idCargo"
+                            value="nombreCargo">
+                        </app-componente-select>
+                    </fieldset>
+                    <fieldset class="form-group col-12">
+                        <app-componente-textarea
+                            [form]="ContactoForm"
+                            [rows]="4"
+                            control="anotacionesContacto"
+                            name="Observación">
+                        </app-componente-textarea>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="input-group">
+                <button
+                    (click)="openModal=false"
+                    type="button"
+                    class="btn btn-secondary w-50 mt-3">
+                    Cancelar
+                </button>
+                <button
+                    (click)="DoModal()"
+                    class="btn btn-primary w-50 mt-3">
+                    {{ Accion }} Contacto
+                </button>
+            </div>
+        </div>
+    </section>
+</ng-container>

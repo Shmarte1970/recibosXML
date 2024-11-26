@@ -1,0 +1,179 @@
+/* main.css */
+.table-container {
+    max-height: 480px;  /* Ajustado para 10 filas aproximadamente */
+    overflow-y: auto;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Hacer la tabla más compacta */
+.table > :not(caption) > * > * {
+    padding: 0.5rem;  /* Reducir el padding de las celdas */
+}
+
+/* Ajustar el tamaño de la fuente */
+.table {
+    font-size: 0.9rem;
+}
+
+/* Hacer los botones más pequeños */
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.table-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: #6c757d;
+}
+
+.table-preview {
+    display: none;
+    margin-top: 15px;
+}
+
+.structure-table {
+    font-size: 0.9em;
+}
+
+.progress {
+    height: 20px;
+    margin-bottom: 10px;
+    background-color: #e9ecef;
+    border-radius: 0.25rem;
+}
+
+.progress-bar {
+    transition: width .3s ease;
+    background-color: #0d6efd;
+}
+
+#progressText {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.table-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;  /* Reducido el padding */
+    background: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.pagination-info {
+    color: #6c757d;
+    font-size: 0.875rem;
+    margin: 0 1rem;
+}
+
+.table thead th {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 1;
+    border-bottom: 2px solid #dee2e6;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+#tableSearch {
+    height: calc(1.5em + 0.5rem + 2px);
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.form-check-input {
+    margin-top: 0.2rem;
+    width: 1rem;
+    height: 1rem;
+}
+
+.btn-info.btn-sm {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.8rem;
+}
+
+/* Estilos para la vista de estructura */
+
+.structure-view {
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    margin: 5px 0;
+    overflow-x: auto;
+    white-space: nowrap;
+    border: 1px solid #e9ecef;
+}
+
+.field-item {
+    display: inline-block;
+    padding: 4px 10px;
+    margin: 2px 4px;
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+    cursor: help;
+}
+
+.field-item:hover {
+    background: #f8f9fa;
+    border-color: #adb5bd;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.field-name {
+    font-weight: 600;
+    color: #0d6efd;
+}
+
+.field-type {
+    color: #6c757d;
+    margin-left: 4px;
+}
+
+.field-length {
+    color: #495057;
+}
+
+/* Mejorar el scroll horizontal */
+.structure-view::-webkit-scrollbar {
+    height: 6px;
+}
+
+.structure-view::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.structure-view::-webkit-scrollbar-thumb {
+    background: #adb5bd;
+    border-radius: 3px;
+}
+
+.structure-view::-webkit-scrollbar-thumb:hover {
+    background: #6c757d;
+}

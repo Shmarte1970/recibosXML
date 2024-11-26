@@ -1,0 +1,442 @@
+<section class="modal-form">
+    <div class="form-container">
+        <div
+            (click)="Close()"
+            class="close-modal">
+            ×
+        </div>
+        <h2 style="margin: 0;">{{ Module.Accion }} {{ Module.Name }}</h2>
+        <mat-tab-group
+            [formGroup]="Module.EmpresaForm"
+            style="height: 70vh;">
+            <mat-tab label="Datos Generales">
+                <div
+                    class="row container contenido over"
+                    style="padding: 2.5px;">
+                    <fieldset
+                        [disabled]="true"
+                        class="form-group col-4">
+                        <app-componente-input
+                            [form]="Module.EmpresaForm"
+                            control="codigEmpresa"
+                            name="Cód. Empresa"
+                            placeholder="Código Empresa">
+                        </app-componente-input>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="Module.Accion==='Ver'"
+                        class="form-group col-8">
+                        <app-componente-input
+                            [form]="Module.EmpresaForm"
+                            control="nomEmpresa"
+                            name="Nueva Empresa">
+                        </app-componente-input>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="Module.Accion==='Ver'"
+                        class="form-group col-6">
+                        <app-componente-input
+                            [form]="Module.EmpresaForm"
+                            control="aliasEmpresa"
+                            name="Alias">
+                        </app-componente-input>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="Module.Accion==='Ver'"
+                        class="form-group col-6">
+                        <app-componente-input
+                            [form]="Module.EmpresaForm"
+                            (input)="Module.EmpresaForm.controls['cifEmpresa'].value?Module.EmpresaForm.patchValue({'cifEmpresa':Module.EmpresaForm.controls['cifEmpresa'].value.trim().toUpperCase()}):null"
+                            control="cifEmpresa"
+                            name="CIF">
+                        </app-componente-input>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="Module.Accion==='Ver'"
+                        class="form-group col-3">
+                        <app-componente-select
+                            [form]="Module.EmpresaForm"
+                            (changex)="Module.EmpresaForm.patchValue({urbana:$event.target.selectedOptions[0].textContent.trim()});"
+                            control="zcurbanaIdurbana"
+                            name="Urbano"
+                            table="zcurbana"
+                            id="idurbana"
+                            value="urbana">
+                        </app-componente-select>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="Module.Accion==='Ver'"
+                        class="form-group col-9">
+                        <app-componente-input
+                            [form]="Module.EmpresaForm"
+                            control="direccionFiscal"
+                            name="Dirección Fiscal">
+                        </app-componente-input>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="Module.Accion==='Ver'"
+                        class="form-group col-6">
+                        <app-componente-select
+                            [form]="Module.EmpresaForm"
+                            [add]="true"
+                            [mayuscula]="true"
+                            (changex)="Module.EmpresaForm.patchValue({paisEmpresa:$event.target.selectedOptions[0].textContent.trim()})"
+                            control="countryId"
+                            name="Pais"
+                            table="countries"
+                            id="id"
+                            value="name">
+                        </app-componente-select>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="!Module.EmpresaForm.controls['countryId'].value || Module.Accion==='Ver'"
+                        class="form-group col-6">
+                        <app-componente-select
+                            [form]="Module.EmpresaForm"
+                            [add]="true"
+                            [mayuscula]="true"
+                            (changex)="Module.EmpresaForm.patchValue({provinciaEmpresa:$event.target.selectedOptions[0].textContent.trim()})"
+                            control="provinceId"
+                            name="Provincia"
+                            table="provinces"
+                            dep="countryId"
+                            id="id"
+                            value="name">
+                        </app-componente-select>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="!Module.EmpresaForm.controls['provinceId'].value || Module.Accion==='Ver'"
+                        class="form-group col-6">
+                        <app-componente-select
+                            [form]="Module.EmpresaForm"
+                            [add]="true"
+                            [mayuscula]="true"
+                            (changex)="Module.EmpresaForm.patchValue({poblacionEmpresa:$event.target.selectedOptions[0].textContent.trim()})"
+                            control="cityId"
+                            name="Ciudad"
+                            table="cities"
+                            dep="provinceId"
+                            id="id"
+                            value="name">
+                        </app-componente-select>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="!Module.EmpresaForm.controls['cityId'].value || Module.Accion==='Ver'"
+                        class="form-group col-6">
+                        <app-componente-select
+                            [form]="Module.EmpresaForm"
+                            [add]="true"
+                            (changex)="Module.EmpresaForm.patchValue({cpEmpresa:$event.target.selectedOptions[0].textContent.trim()})"
+                            control="postcodeId"
+                            name="C.P."
+                            table="postcodes"
+                            dep="cityId"
+                            id="id"
+                            value="postcode">
+                        </app-componente-select>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="Module.Accion==='Ver'"
+                        class="form-group col-6">
+                        <app-componente-input
+                            [form]="Module.EmpresaForm"
+                            control="emailEmpresa"
+                            name="E-mail de facturación">
+                        </app-componente-input>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="Module.Accion==='Ver'"
+                        class="form-group col-3">
+                        <app-componente-input
+                            [form]="Module.EmpresaForm"
+                            control="telefono"
+                            name="Telefono 1">
+                        </app-componente-input>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="Module.Accion==='Ver'"
+                        class="form-group col-3">
+                        <app-componente-input
+                            [form]="Module.EmpresaForm"
+                            control="telefono2"
+                            name="Telefono 2">
+                        </app-componente-input>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="Module.Accion==='Ver'"
+                        class="form-group col-6">
+                        <mat-slide-toggle
+                            [formControlName]="'moroso'"
+                            color="warn"
+                            name="Moroso">
+                            Moroso
+                        </mat-slide-toggle>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="Module.Accion==='Ver'"
+                        class="form-group col-3">
+                        <app-componente-checkbox
+                            [form]="Module.EmpresaForm"
+                            control="envioFacturas"
+                            name="Envio Factura">
+                        </app-componente-checkbox>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="Module.Accion==='Ver'"
+                        class="form-group col-3">
+                        <app-componente-checkbox
+                            [form]="Module.EmpresaForm"
+                            control="facturaElectronica"
+                            name="Factura Electrónica">
+                        </app-componente-checkbox>
+                    </fieldset>
+
+                    <fieldset
+                        [disabled]="Module.Accion==='Ver'"
+                        class="form-group col-3">
+                        <app-componente-checkbox
+                            [form]="Module.EmpresaForm"
+                            control="cliente"
+                            name="Cliente">
+                        </app-componente-checkbox>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="Module.Accion==='Ver'"
+                        class="form-group col-3">
+                        <app-componente-checkbox
+                            [form]="Module.EmpresaForm"
+                            control="proveedor"
+                            name="Proveedor">
+                        </app-componente-checkbox>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="Module.Accion==='Ver'"
+                        class="form-group col-3">
+                        <app-componente-checkbox
+                            [form]="Module.EmpresaForm"
+                            control="transportista"
+                            name="Transportista">
+                        </app-componente-checkbox>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="Module.Accion==='Ver'"
+                        class="form-group col-3">
+                        <app-componente-checkbox
+                            [form]="Module.EmpresaForm"
+                            control="potencial"
+                            name="Potencial">
+                        </app-componente-checkbox>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="Module.Accion==='Ver'"
+                        class="form-group col-6">
+                        <app-componente-input
+                            [form]="Module.EmpresaForm"
+                            control="horarioEmpresa"
+                            name="Horario">
+                        </app-componente-input>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="Module.Accion==='Ver'"
+                        class="form-group col-6">
+                        <app-componente-input
+                            [form]="Module.EmpresaForm"
+                            control="url"
+                            name="Web">
+                        </app-componente-input>
+                    </fieldset>
+                </div>
+            </mat-tab>
+            <mat-tab
+                [disabled]="Module.Accion==='Crear'"
+                label="Datos Comerciales">
+                <div
+                    class="row container contenido over"
+                    style="padding: 2.5px;">
+                    <fieldset
+                        [disabled]="Module.Accion==='Ver'"
+                        class="form-group col-12">
+                        <app-empresa-tabla-delegacion></app-empresa-tabla-delegacion>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="Module.Accion==='Ver'"
+                        class="form-group col-12">
+                        <app-empresa-tabla-contacto></app-empresa-tabla-contacto>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="Module.Accion==='Ver'"
+                        class="form-group col-12">
+                        <app-componente-textarea
+                            [form]="Module.EmpresaForm"
+                            [rows]="4"
+                            control="observaciones"
+                            name="Anotaciones">
+                        </app-componente-textarea>
+                    </fieldset>
+                </div>
+            </mat-tab>
+            <mat-tab
+                [disabled]="Module.Accion==='Crear'"
+                label="Datos Financieros">
+                <div
+                    class="row container contenido over"
+                    style="padding: 2.5px;">
+                    <fieldset
+                        [disabled]="Module.Accion==='Ver'"
+                        class="form-group col-6">
+                        <app-componente-input
+                            [form]="Module.EmpresaForm"
+                            control="nombreBanco"
+                            name="Nombre Banco">
+                        </app-componente-input>
+                    </fieldset>
+                    <fieldset
+                        [disabled]="Module.Accion==='Ver'"
+                        class="form-group col-6">
+                        <app-componente-input
+                            [form]="Module.EmpresaForm"
+                            control="cuentaBancaria"
+                            name="Cuenta Bancaria">
+                        </app-componente-input>
+                    </fieldset>
+                    <mat-tab-group
+                        *ngIf="Module.EmpresaForm.controls['cliente'].value || Module.EmpresaForm.controls['proveedor'].value">
+                        <mat-tab label="Alquiler"
+                            *ngIf="Module.EmpresaForm.controls['cliente'].value">
+                            <div
+                                class="row container contenido over"
+                                style="padding: 2.5px;">
+                                <fieldset
+                                    [disabled]="Module.Accion==='Ver'"
+                                    class="form-group col-12">
+                                    <!-- (changex)="Module.EmpresaForm.patchValue({idctaZarca:$event.target.selectedOptions[0].textContent.trim()})"-->
+                                    <app-componente-select
+                                        [form]="Module.EmpresaForm"
+                                        control="idCtaBcoAlquiler"
+                                        name="Cuenta Bancaria Zarca"
+                                        table="zcctabancariaszarca"
+                                        id="idCtaBancaria"
+                                        value="nombreBanco"
+                                        [nulo]="true">
+                                    </app-componente-select>
+                                </fieldset>
+                                <app-empresa-tabla-formapago
+                                    Type="alquiler">
+                                </app-empresa-tabla-formapago>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Venta"
+                            *ngIf="Module.EmpresaForm.controls['cliente'].value">
+                            <div
+                                class="row container contenido over"
+                                style="padding: 2.5px;">
+                                <fieldset
+                                    [disabled]="Module.Accion==='Ver'"
+                                    class="form-group col-12">
+                                    <!-- (changex)="Module.EmpresaForm.patchValue({idctaZarca:$event.target.selectedOptions[0].textContent.trim()})"-->
+                                    <app-componente-select
+                                        [form]="Module.EmpresaForm"
+                                        control="idCtaBcoVenta"
+                                        name="Cuenta Bancaria Zarca"
+                                        table="zcctabancariaszarca"
+                                        id="idCtaBancaria"
+                                        value="nombreBanco"
+                                        [nulo]="true">
+                                    </app-componente-select>
+                                </fieldset>
+                                <app-empresa-tabla-formapago
+                                    Type="venta">
+                                </app-empresa-tabla-formapago>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Compra"
+                            *ngIf="Module.EmpresaForm.controls['proveedor'].value">
+                            <div
+                                class="row container contenido over"
+                                style="padding: 2.5px;">
+                                <fieldset
+                                    [disabled]="Module.Accion==='Ver'"
+                                    class="form-group col-12">
+                                    <!-- (changex)="Module.EmpresaForm.patchValue({idctaZarca:$event.target.selectedOptions[0].textContent.trim()})"-->
+                                    <app-componente-select
+                                        [form]="Module.EmpresaForm"
+                                        control="idCtaBcoCompra"
+                                        name="Cuenta Bancaria Zarca"
+                                        table="zcctabancariaszarca"
+                                        id="idCtaBancaria"
+                                        value="nombreBanco"
+                                        [nulo]="true">
+                                    </app-componente-select>
+                                </fieldset>
+                                <app-empresa-tabla-formapago
+                                    Type="compra">
+                                </app-empresa-tabla-formapago>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Info"
+                            *ngIf="Module.EmpresaForm.controls['cliente'].value">
+                            <div
+                                class="row container contenido over"
+                                style="padding: 2.5px;">
+                                <fieldset
+                                    [disabled]="Module.Accion==='Ver'"
+                                    class="form-group col-12">
+                                    <div class="card">
+                                        <div class="card-head">
+                                            <div
+                                                [style.height.px]="4*49+36.5"
+                                                class="table-responsive table-container">
+                                                <table
+                                                    class="table table-hover text-nowrap">
+                                                    <thead class="table-light">
+                                                        <tr>
+                                                            <td
+                                                                *ngFor="let column of columnsInfo">
+                                                                {{ column.Name
+                                                                }}
+                                                            </td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody
+                                                        *ngIf="module.cacheTable['zcdelegacion']">
+                                                        <ng-container
+                                                            *ngFor="let data of []; index as i">
+                                                            <tr>
+                                                                <ng-container
+                                                                    *ngFor="let column of columnsInfo">
+                                                                    <td>
+                                                                        <p>{{
+                                                                            data[column.Key]
+                                                                            }}</p>
+                                                                    </td>
+                                                                </ng-container>
+                                                            </tr>
+                                                        </ng-container>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+        <div class="input-group">
+            <button
+                (click)="Close()"
+                type="button"
+                class="btn btn-secondary w-50 mt-3">
+                Cancelar
+            </button>
+            <button
+                *ngIf="Module.Accion!=='Ver'"
+                (click)="DoModal.emit()"
+                class="btn btn-primary w-50 mt-3">
+                {{ Module.Accion }} {{ Module.Name }}
+            </button>
+        </div>
+    </div>
+</section>

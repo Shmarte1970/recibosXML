@@ -1,0 +1,431 @@
+<section class="modal-form">
+  <div class="form-container">
+    <div class="close-modal" (click)="close({})">×</div>
+
+    <h2 [style.display]="showUserForm ? '' : 'none'" class="mb-4">
+      Nuevo Usuario
+    </h2>
+    <form
+      [style.display]="showUserForm ? '' : 'none'"
+      class="h-100"
+      [formGroup]="userForm"
+      (submit)="createUser()"
+    >
+      <div class="overflow-auto h-75 pe-4">
+        <div class="row">
+          <div class="col">
+            <fieldset class="form-group mb-3">
+              <label for="name">Nombre</label>
+              <input
+                id="name"
+                class="form-control"
+                placeholder="Nombre"
+                formControlName="name"
+              />
+              @if (name.invalid && name.touched) {
+              <p class="text-danger">Nombre es un campo obligatorio</p>
+              }
+            </fieldset>
+
+            <fieldset class="form-group mb-3">
+              <label for="surnames">Apellidos</label>
+              <input
+                id="surnames"
+                class="form-control"
+                placeholder="Apellidos"
+                formControlName="surnames"
+              />
+              @if (surnames.invalid && surnames.touched) {
+              <p class="text-danger">Apellidos es un campo obligatorio</p>
+              }
+            </fieldset>
+
+            <fieldset class="form-group mb-3">
+              <label for="username">Nombre de Usuario</label>
+              <input
+                id="username"
+                class="form-control"
+                placeholder="Nombre de Usuario"
+                formControlName="username"
+              />
+              @if (username.invalid && username.touched) {
+              <p class="text-danger">
+                Nombre de Usuario es un campo obligatorio
+              </p>
+              }
+            </fieldset>
+
+            <fieldset class="form-group mb-3">
+              <label for="password">Contraseña</label>
+              <input
+                [type]="showPass"
+                id="password"
+                class="form-control"
+                placeholder="Contraseña"
+                formControlName="password"
+              />
+              <i class="fa fa-eye-slash move-eye" aria-hidden="true" (click)="togglePassword()" ></i>
+              @if (password.hasError('required') && password.touched) {
+              <p class="text-danger">Contraseña es un campo obligatorio</p>
+              } @else if (password.hasError('validPassword') &&
+              password.touched) {
+              <p class="text-danger">
+                La contraseña debe contener al menos 12 caracteres, una
+                minúscula, una mayúscula, un número y algún carácter especial
+                (&#64;$!%*?&)
+              </p>
+              }
+            </fieldset>
+
+            <fieldset class="form-group mb-3">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                class="form-control"
+                placeholder="Email"
+                formControlName="email"
+              />
+              @if (email.hasError('required') && email.touched) {
+              <p class="text-danger">Email es un campo obligatorio</p>
+              } @else if (email.hasError('validEmail') && email.touched) {
+              <p class="text-danger">Debe ser un correo válido</p>
+              }
+            </fieldset>
+
+            <fieldset class="form-group mb-3">
+              <label for="phone">Teléfono</label>
+              <input
+                id="phone"
+                class="form-control"
+                placeholder="Teléfono"
+                formControlName="phone"
+              />
+              @if (phone.invalid && phone.touched) {
+              <p class="text-danger">Teléfono es un campo obligatorio</p>
+              }
+            </fieldset>
+          </div>
+
+          <div class="col">
+            <fieldset class="form-group mb-3">
+              <label for="speciality">Especialidad</label>
+              <select
+                id="speciality"
+                class="form-select"
+                formControlName="specialityId"
+                (change)="getCategories()"
+              >
+                <option value="" disabled style="display: none"></option>
+                @for (speciality of specialities; track speciality.id) {
+                <option [value]="speciality.id">{{ speciality.name }}</option>
+                }
+              </select>
+            </fieldset>
+
+            <fieldset class="form-group mb-3">
+              <label for="category">Categoría</label>
+              <select
+                id="category"
+                class="form-select"
+                formControlName="categoryId"
+              >
+                <option value="" disabled style="display: none"></option>
+                @for (category of categories; track category.id) {
+                <option [value]="category.id">{{ category.name }}</option>
+                }
+              </select>
+            </fieldset>
+
+            <fieldset class="form-group mb-3">
+              <label for="country">País</label>
+              <div class="input-group">
+                <select
+                  id="country"
+                  class="form-select"
+                  formControlName="countryId"
+                  (change)="getProvinces()"
+                >
+                  <option value="" disabled style="display: none"></option>
+                  @for (country of countries; track country.id) {
+                  <option [value]="country.id">{{ country.name }}</option>
+                  }
+                </select>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  (click)="openCountryForm()"
+                >
+                  + añadir
+                </button>
+              </div>
+            </fieldset>
+
+            <fieldset class="form-group mb-3">
+              <label for="province">Provincia</label>
+              <div class="input-group">
+                <select
+                  id="province"
+                  class="form-select"
+                  formControlName="provinceId"
+                  (change)="getCities()"
+                >
+                  <option value="" disabled style="display: none"></option>
+                  @for (province of provinces; track province.id) {
+                  <option [value]="province.id">{{ province.name }}</option>
+                  }
+                </select>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  (click)="openProvinceForm()"
+                  [disabled]="provinceId.disabled"
+                >
+                  + añadir
+                </button>
+              </div>
+            </fieldset>
+
+            <fieldset class="form-group mb-3">
+              <label for="city">Ciudad</label>
+              <div class="input-group">
+                <select
+                  id="city"
+                  class="form-select"
+                  formControlName="cityId"
+                  (change)="getPostcodes()"
+                >
+                  <option value="" disabled style="display: none"></option>
+                  @for (city of cities; track city.id) {
+                  <option [value]="city.id">{{ city.name }}</option>
+                  }
+                </select>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  (click)="openCityForm()"
+                  [disabled]="cityId.disabled"
+                >
+                  + añadir
+                </button>
+              </div>
+            </fieldset>
+
+            <fieldset class="form-group mb-3">
+              <label for="postcode">Código Postal</label>
+              <div class="input-group">
+                <select
+                  id="postcode"
+                  class="form-select"
+                  formControlName="postcodeId"
+                >
+                  <option value="" disabled style="display: none"></option>
+                  @for (postcode of postcodes; track postcode.id) {
+                  <option [value]="postcode.id">{{ postcode.postcode }}</option>
+                  }
+                </select>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  (click)="openPostcodeForm()"
+                  [disabled]="postcodeId.disabled"
+                >
+                  + añadir
+                </button>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+
+        <fieldset class="form-group mb-3">
+          <label for="roles">Roles</label>
+          <select
+            class="form-select"
+            id="roles"
+            data-placeholder="Selecciona los roles de usuario"
+            formControlName="userRoles"
+            multiple
+          >
+            @for (rol of roles; track roles.id) {
+            <option [value]="rol.id">{{ rol.name }}</option>
+            }
+          </select>
+        </fieldset>
+      </div>
+
+      <div class="input-group">
+        <button
+          type="button"
+          class="btn btn-secondary w-50 mt-3"
+          (click)="close({})"
+        >
+          Cancelar
+        </button>
+        <button class="btn btn-primary w-50 mt-3" [disabled]="userForm.invalid">
+          Crear Usuario
+        </button>
+      </div>
+    </form>
+
+    <h2 [style.display]="showCountryForm ? '' : 'none'" class="mb-4">
+      Nuevo País
+    </h2>
+    <form
+      [style.display]="showCountryForm ? '' : 'none'"
+      class="h-100"
+      [formGroup]="countryForm"
+      (submit)="postCountry()"
+    >
+      <div class="overflow-auto h-75 pe-4">
+        <fieldset class="form-group mb-3">
+          <label for="newCountryName">País</label>
+          <input
+            id="newCountryName"
+            class="form-control"
+            placeholder="País"
+            formControlName="name"
+          />
+          @if (newCountryName.invalid && newCountryName.touched) {
+          <p class="text-danger">País es un campo obligatorio</p>
+          }
+        </fieldset>
+      </div>
+
+      <div class="input-group">
+        <button
+          type="button"
+          class="btn btn-secondary w-50 mt-3"
+          (click)="openUserForm()"
+        >
+          Cancelar
+        </button>
+        <button
+          class="btn btn-primary w-50 mt-3"
+          [disabled]="countryForm.invalid"
+        >
+          Crear País
+        </button>
+      </div>
+    </form>
+
+    <h2 [style.display]="showProvinceForm ? '' : 'none'" class="mb-4">
+      Nueva Provincia
+    </h2>
+    <form
+      [style.display]="showProvinceForm ? '' : 'none'"
+      class="h-100"
+      [formGroup]="provinceForm"
+      (submit)="postProvince()"
+    >
+      <div class="overflow-auto h-75 pe-4">
+        <fieldset class="form-group mb-3">
+          <label for="newProvinceName">Provincia</label>
+          <input
+            id="newProvinceName"
+            class="form-control"
+            placeholder="Provincia"
+            formControlName="name"
+          />
+          @if (newProvinceName.invalid && newProvinceName.touched) {
+          <p class="text-danger">Provincia es un campo obligatorio</p>
+          }
+        </fieldset>
+      </div>
+
+      <div class="input-group">
+        <button
+          type="button"
+          class="btn btn-secondary w-50 mt-3"
+          (click)="openUserForm()"
+        >
+          Cancelar
+        </button>
+        <button
+          class="btn btn-primary w-50 mt-3"
+          [disabled]="provinceForm.invalid"
+        >
+          Crear Provincia
+        </button>
+      </div>
+    </form>
+
+    <h2 [style.display]="showCityForm ? '' : 'none'" class="mb-4">
+      Nueva Ciudad
+    </h2>
+    <form
+      [style.display]="showCityForm ? '' : 'none'"
+      class="h-100"
+      [formGroup]="cityForm"
+      (submit)="postCity()"
+    >
+      <div class="overflow-auto h-75 pe-4">
+        <fieldset class="form-group mb-3">
+          <label for="newCityName">Ciudad</label>
+          <input
+            id="newCityName"
+            class="form-control"
+            placeholder="Ciudad"
+            formControlName="name"
+          />
+          @if (newCityName.invalid && newCityName.touched) {
+          <p class="text-danger">Ciudad es un campo obligatorio</p>
+          }
+        </fieldset>
+      </div>
+
+      <div class="input-group">
+        <button
+          type="button"
+          class="btn btn-secondary w-50 mt-3"
+          (click)="openUserForm()"
+        >
+          Cancelar
+        </button>
+        <button class="btn btn-primary w-50 mt-3" [disabled]="cityForm.invalid">
+          Crear Ciudad
+        </button>
+      </div>
+    </form>
+
+    <h2 [style.display]="showPostcodeForm ? '' : 'none'" class="mb-4">
+      Nuevo Código Postal
+    </h2>
+    <form
+      [style.display]="showPostcodeForm ? '' : 'none'"
+      class="h-100"
+      [formGroup]="postcodeForm"
+      (submit)="postPostcode()"
+    >
+      <div class="overflow-auto h-75 pe-4">
+        <fieldset class="form-group mb-3">
+          <label for="newPostcode">Código Postal</label>
+          <input
+            id="newPostcode"
+            class="form-control"
+            placeholder="Código Postal"
+            formControlName="postcode"
+          />
+          @if (newPostcode.invalid && newPostcode.touched) {
+          <p class="text-danger">Código Postal es un campo obligatorio</p>
+          }
+        </fieldset>
+      </div>
+
+      <div class="input-group">
+        <button
+          type="button"
+          class="btn btn-secondary w-50 mt-3"
+          (click)="openUserForm()"
+        >
+          Cancelar
+        </button>
+        <button
+          class="btn btn-primary w-50 mt-3"
+          [disabled]="postcodeForm.invalid"
+        >
+          Crear Código Postal
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

@@ -1,0 +1,12 @@
+<ng-container [formGroup]="form">
+    <label [for]="control">{{name}}</label>
+    <input
+        [id]="control"
+        [placeholder]="placeholder || name"
+        [formControlName]="control"
+        class="form-control"
+        [ngClass]="c[control].dirty || c[control].touched ? c[control].errors ? 'is-invalid' : 'is-valid':''"
+        (input)="input.emit()"
+        [matTooltip]="error.Error(c,control)"
+    >
+</ng-container>

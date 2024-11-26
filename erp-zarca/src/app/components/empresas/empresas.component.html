@@ -1,0 +1,126 @@
+<div class="posicion">
+    <h1 class="leflot">{{Name}}</h1>
+    <h1 class="rightlot">
+        Usuario:
+        <span class="colorp">{{userName}}</span>
+        <app-reloj></app-reloj>
+    </h1>
+</div>
+
+<ng-container *ngIf="!module.loading; else elseTemplate">
+    <div class="card">
+        <div class="card-head">
+            <div class="text-center flex-end mb3">
+                <button
+                    *ngIf="permise.checkPermise('create_empresa')"
+                    (click)="Accion='Crear';sData=null;OpenModal()"
+                    type="button"
+                    class="btn btn-outline-primary btn-lg btn-blog mt-3 mb-3">
+                    Nuevo Empresa
+                </button>
+            </div>
+            <div class="text-center flex-end mb3 row">
+                <div
+                    class="col input-group"
+                    style="align-content: center;">
+                    <input
+                        [(ngModel)]="Buscar"
+                        (input)="Search()"
+                        id="busqueda"
+                        class="form-control"
+                        placeholder="Búsqueda">
+                </div>
+            </div>
+            <div
+                (scroll)="onScroll($event)"
+                class="table-responsive table-container">
+                <table class="table table-hover text-nowrap">
+                    <thead class="table-light">
+                        <tr>
+                            <td *ngFor="let c of Columns">{{c.Name}}</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container
+                            *ngFor="let pData of pDatas?.data?.rows; index as i">
+                            <ng-container
+                                *ngIf="Paginador[0]<=i && i<Paginador[1]">
+                                <tr
+                                    (click)="sData=sData===pData?null:pData"
+                                    (dblclick)="Accion=permise.checkPermise('edit_empresa')?'Editar':'Ver';sData=pData;OpenModal()">
+                                    <ng-container *ngFor="let c of Columns">
+                                        <td
+                                            [style.backgroundColor]="sData===pData?'darkgray':''"
+                                            [style.color]="pData.enable?'':'lightgray'">
+                                            <p>{{ pData[c.Key] }}</p>
+                                        </td>
+                                    </ng-container>
+                                </tr>
+                            </ng-container>
+                        </ng-container>
+                        <tr>
+                            <td colspan="100%">
+                                <p>
+                                    {{Paginador[1] < pDatas.data.count ?
+                                    'Cargando más datos.' :
+                                    'Ya no hay más datos.'
+                                    }}
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="d-flex align-items-start flex-column">
+                <div class="ms-auto p-2">
+                    <button
+                        [disabled]="!sData"
+                        (click)="Accion='Ver';OpenModal()"
+                        class="btn btn-outline-primary me-3">
+                        Ver
+                    </button>
+                    <button
+                        *ngIf="permise.checkPermise('activate_empresa')"
+                        [disabled]="!sData"
+                        (click)="Accion='Activar';DoModal()"
+                        class="btn btn-outline-secondary me-3">
+                        Activar/Desactivar
+                    </button>
+                    <button
+                        *ngIf="permise.checkPermise('edit_empresa')"
+                        [disabled]="!sData"
+                        (click)="Accion='Editar';OpenModal()"
+                        class="btn btn-outline-success me-3">
+                        Editar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+<ng-template #elseTemplate>
+    <app-componente-loading></app-componente-loading>
+</ng-template>
+<app-empresa-modal
+    *ngIf="openModal"
+    (CloseModal)="Buscar='';openModal=false;"
+    (DoModal)="DoModal()"></app-empresa-modal>
+<div
+    *ngIf="dialog"
+    class="backgrounddialog">
+    <mat-dialog-content class="dialog">
+        <h2>DESEAS CONTINUAR?</h2>
+        <button
+            (click)="Accion='Editar';dialog=false;OpenModal()"
+            type="button"
+            class="btn btn-outline-primary btn-lg btn-blog mt-3 mb-3">
+            Si
+        </button>
+        <button
+            (click)="openModal=false;dialog=false"
+            type="button"
+            class="btn btn-outline-primary btn-lg btn-blog mt-3 mb-3">
+            No
+        </button>
+    </mat-dialog-content>
+</div>
